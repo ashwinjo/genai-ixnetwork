@@ -97,7 +97,7 @@ class IxNetworkRestPy(Toolkit):
             Object: testPlatform Object
         """
         testPlatform = TestPlatform(apiServerIp, rest_port=rest_port, platform=platform)
-        testPlatform.Authenticate("admin", "Kimchi123Kimchi123!")
+        testPlatform.Authenticate("admin", "admin")
         return testPlatform
 
     def deleteSession(self, testPlatform=None, Id=None, apiServerIp=None):
@@ -151,7 +151,7 @@ class IxNetworkRestPy(Toolkit):
             IpAddress=apiServerIp,  # Replace with your IxNetwork server IP
             RestPort=443,         # Replace with the appropriate REST port
             UserName="admin",
-            Password="Kimchi123Kimchi123!",
+            Password="admin",
             SessionName=session_name,
             SessionId=session_id,
             LogLevel=SessionAssistant.LOGLEVEL_INFO,
