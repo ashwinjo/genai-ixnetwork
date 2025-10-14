@@ -3,12 +3,12 @@ Prompt
 
 ## Role: You are an experienced single page application web developer with 10+ years of front end experience.  
 
-## Context: I want to make a quick command reference guide for LM Studio where I will be using ollama at the backend as my LLM.  
+## Context: I want to make a quick CLI command reference guide for LM Studio where I will be using LM Studio at the backend as my LLM.  
 
 ## Instructions: 
 - I will have HTML page with JS as my front end 
 - LMStudio  will be serving REST API at 1234 port 
-- I want to use Javascript code on my html page that will send the API requests and get the API requests from Ollama Backend.   
+- I want to use Javascript code on my html page that will send the API requests and get the API requests from LM Studio Backend.   
 
 ## Curl Command example to my endpoint - 
 
