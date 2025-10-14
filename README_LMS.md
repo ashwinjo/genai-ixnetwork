@@ -4,6 +4,7 @@ Certainly\! Here is the content combined into one large Markdown block, ready fo
 ## 🚀 Command Line Interface (CLI) Session Log
 
 This log details the process of downloading, loading, and interacting with a language model service (`lms`).
+````
 
 ### 1. Model Download and Loading
 
@@ -15,7 +16,7 @@ The session begins by fetching and loading the **liquid/lfm2-1.2b** model.
 lms get liquid/lfm2-1.2b
 
 lms load liquid/lfm2-1.2b
-````
+```
 
 **Output:**
 
