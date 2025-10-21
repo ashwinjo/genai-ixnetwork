@@ -1,0 +1,231 @@
+<!DOCTYPE html> 
+
+<html lang="en"> 
+
+<head> 
+
+<meta charset="UTF-8" /> 
+
+<title>LM Studio Command Reference</title> 
+
+<style> 
+
+body { 
+
+font-family: Arial, sans-serif; 
+
+margin: 2rem auto; 
+
+max-width: 600px; 
+
+line-height: 1.5; 
+
+} 
+
+input[type="text"] { 
+
+width: 80%; 
+
+padding: 10px; 
+
+font-size: 1rem; 
+
+} 
+
+button { 
+
+padding: 10px 15px; 
+
+font-size: 1rem; 
+
+cursor: pointer; 
+
+} 
+
+#response { 
+
+margin-top: 1.5rem; 
+
+padding: 1rem; 
+
+background: #f4f4f4; 
+
+border-radius: 5px; 
+
+white-space: pre-wrap; 
+
+} 
+
+</style> 
+
+</head> 
+
+<body> 
+
+<h2>LM Studio Command Reference Guide</h2> 
+
+<p>Ask me anything about using <strong>lms</strong> CLI commands 👇</p> 
+
+ 
+
+<input type="text" id="question" placeholder="Enter your question..." /> 
+
+<button id="askBtn">Ask</button> 
+
+ 
+
+<div id="response"></div> 
+
+ 
+
+<script> 
+
+const API_URL = "http://127.0.0.1:1234/v1/chat/completions"; 
+
+const MODEL = "qwen/qwen3-4b"; 
+
+ 
+
+// Static system content 
+
+const SYSTEM_MESSAGE = ` 
+
+Usage 
+
+lms <subcommand> 
+
+ 
+
+where <subcommand> can be one of: 
+
+ 
+
+- chat - Open an interactive chat with the currently loaded model. 
+
+- status - Prints the status of LM Studio 
+
+- server - Commands for managing the local server 
+
+- ls - List all downloaded models 
+
+- ps - List all loaded models 
+
+- get - Searching and downloading a model from online. 
+
+- load - Load a model 
+
+- unload - Unload a model 
+
+- create - Create a new project with scaffolding 
+
+- log - Log operations. Currently only supports streaming logs from LM Studio via \`lms log stream\` 
+
+- dev - Starts the development server for the plugin in the current folder. 
+
+- push - Uploads the plugin in the current folder to LM Studio Hub. 
+
+- clone - Clone an artifact from LM Studio Hub to a local folder. 
+
+- login - Authenticate with LM Studio 
+
+- import - Import a model file into LM Studio 
+
+- flags - Set or get experiment flags 
+
+- bootstrap - Bootstrap the CLI 
+
+- version - Prints the version of the CLI 
+
+ 
+
+For more help, try running \`lms <subcommand> --help\` 
+
+`; 
+
+ 
+
+document.getElementById('askBtn').addEventListener('click', async () => { 
+
+const question = document.getElementById('question').value.trim(); 
+
+const responseDiv = document.getElementById('response'); 
+
+responseDiv.textContent = "⏳ Thinking..."; 
+
+ 
+
+if (!question) { 
+
+responseDiv.textContent = "⚠️ Please enter a question."; 
+
+return; 
+
+} 
+
+ 
+
+const payload = { 
+
+model: MODEL, 
+
+messages: [ 
+
+{ role: "system", content: SYSTEM_MESSAGE }, 
+
+{ role: "user", content: question } 
+
+], 
+
+temperature: 0.7, 
+
+max_tokens: -1, 
+
+stream: false 
+
+}; 
+
+ 
+
+try { 
+
+const res = await fetch(API_URL, { 
+
+method: "POST", 
+
+headers: { "Content-Type": "application/json" }, 
+
+body: JSON.stringify(payload) 
+
+}); 
+
+ 
+
+if (!res.ok) { 
+
+throw new Error(`Server error: ${res.status}`); 
+
+} 
+
+ 
+
+const data = await res.json(); 
+
+const answer = data?.choices?.[0]?.message?.content || "No response received."; 
+
+responseDiv.textContent = answer; 
+
+} catch (err) { 
+
+responseDiv.textContent = "❌ Error: " + err.message; 
+
+console.error(err); 
+
+} 
+
+}); 
+
+</script> 
+
+</body> 
+
+</html> 
